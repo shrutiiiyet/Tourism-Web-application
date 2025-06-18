@@ -1,9 +1,9 @@
-import express, { Router } from express;
-import {signin, signup} from '../routeHandlers/userHandler';
+import express from 'express';
+import {signin, signup} from "../routeHandlers/userHandler.js"
 
-let userRouter = Router();
+let userRouter = express.Router();
 
-userRouter.post('signup', signup());
-userRouter.post('signin', signin());
+userRouter.post('/signup', signup);
+userRouter.post('/signin', signin);
 
 export default userRouter;
