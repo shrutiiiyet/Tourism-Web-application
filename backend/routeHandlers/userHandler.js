@@ -1,34 +1,69 @@
-import express from express;
-import client from "../../db/prisma";
-import { hashPassword, verifyPassword } from '../utils/bcrypt';
-import { CreateUserSchema } from "../utils/zodValidation";
-import { z } from "zod";
+import client from "../../db/prisma/index.js";
+import { hashPassword, verifyPassword } from '../utils/bcrypt.js';
+import { generateToken } from "../utils/jwt.js";
+import { CreateUserSchema } from "../utils/zodValidation.js";
 
-const signup = async(req, res) => {
 
-    const res = CreateUserSchema.safeParse(req.body);
+export const signup = async(req, res) => {
 
-    if(!res.success) {
+    const result = await CreateUserSchema.safeParse(req.body);
+
+    if(!result.success) {
         res.status(403).json ({
             message: res.error.message
         })
+        return;
     }
 
     const email = req.body.email;
     const password = req.body.password;
 
-    const hashedPassword = hashPassword(password);
+    const hashedPassword = await hashPassword(password);
 
-    client.user.create({
+    let user = await client.user.create ({
         data: {
-            userName: email,
+            email: email,
             password: hashedPassword
         }
     })
+
+    res.json({
+        message: "user created succesfully!",
+        id: user.id
+    })
 }
 
-const signin = async(req, res) => {
 
+export const signin = async(req, res) => {
+
+    const email = req.body.email;
+    const password = req.body.password;
+
+    let user = await client.user.findFirst({
+        where: {
+            email: email
+        }
+    });
+
+    if(!user) {
+        res.status(404).json({
+            message: "User does not exist"
+        })
+        return;
+    }
+
+    const validity = verifyPassword(password, user.password);
+
+    if(!validity) {
+        res.json({
+            message: "Incorrect credentials"
+        })
+        return;
+    }
+
+    const token = await generateToken(user.id);
+
+    res.json({
+        token: token
+    })
 }
-
-module.exports = signin, signup;

@@ -1,11 +1,9 @@
-import bcrypt from bcrypt;
+import bcrypt from 'bcrypt';
 
-const hashPassword = (password) => {
+export const hashPassword = async(password) => {
     return bcrypt.hash(password, 5);
 }
 
-const verifyPassword = (password, hashedPassword) => {
+export const verifyPassword = async(password, hashedPassword) => {
     return bcrypt.compare(password, hashedPassword);
 }
-
-export default {hashPassword, verifyPassword};

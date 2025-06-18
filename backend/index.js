@@ -1,11 +1,9 @@
-const express = require("express")
+import express from 'express';
+import userRouter from './routes/userRoute.js'
 
 const app = express();
 
-app.get('/display' , function (req , res) {
-    res.send("hi from backend")
-})
+app.use(express.json());
+app.use('/user', userRouter);
 
-console.log("hii there")
-
-app.listen(3000)
+app.listen(3000);
