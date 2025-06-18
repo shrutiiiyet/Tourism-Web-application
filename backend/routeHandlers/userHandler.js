@@ -4,7 +4,7 @@ import { hashPassword, verifyPassword } from '../utils/bcrypt';
 import { CreateUserSchema } from "../utils/zodValidation";
 import { z } from "zod";
 
-const signin = async(req, res) => {
+const signup = async(req, res) => {
 
     const res = CreateUserSchema.safeParse(req.body);
 
@@ -27,7 +27,7 @@ const signin = async(req, res) => {
     })
 }
 
-const signup = async(req, res) => {
+const signin = async(req, res) => {
 
 }
 
