@@ -1,39 +1,39 @@
-import { WebSocketServer } from "ws";
+import { WebSocketServer, WebSocket } from "ws";
+import { ConnectAction, SendMessage, updateMap } from "./handling/functions";
 
-let allSockets = [];
-
+const liveMap = new Map();
 const wss = new WebSocketServer({port: 8080});
 
-// inputs {
-    // type : "join"/"chat",
-    // payload: {
-    //     "roomId"/"message"
-    // }
-//}
 wss.on("connection", (socket) => {
   
     
-    socket.on("message", (e) => {
+    socket.on("message", async (e) => {
 
         const parsedMessage = JSON.parse(e);
 
-        if(parsedMessage.type == "connect") {
-            allSockets.push ({
-                socket,
-                room: parsedMessage.payload.roomId
-            })
+        if(parsedMessage.type == "Connect") {
+            ConnectAction(liveMap, parsedMessage, socket);
         }
 
-        if(parsedMessage.type == "chat") {
+        else if(parsedMessage.type == "Send_Message") {
 
-            let currentUserRoom = null;
-             currentUserRoom = allSockets.find((x) => x.socket == socket).room;
-
-            allSockets.forEach((x) => {
-                if(x.room == currentUserRoom) {
-                    x.socket.send(parsedMessage.payload.message);
+            const savedMessage = SendMessage(parsedMessage);
+            const broadcasting = {
+                message: {
+                    type: "New_Message",
+                    id: savedMessage.id,
+                    content: (await savedMessage).content,
+                    senderId: (await savedMessage).senderId,
+                    roomId: (await savedMessage).roomId,
+                    createdAt: (await savedMessage).createdAt
                 }
-            })
+            }
+
+            liveMap.forEach((ids, currSocket) => {
+                if(ids.roomId == parsedMessage.roomId &&  currSocket != socket && currSocket.readyState === WebSocket.OPEN) {
+                    currSocket.send(JSON.stringify(broadcasting));
+                }
+            });
         }
     })
 })
