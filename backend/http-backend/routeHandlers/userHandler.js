@@ -45,36 +45,36 @@ export const signup = async(req, res) => {
 export const signin = async(req, res) => {
 
     try {
-    const email = req.body.email;
-    const password = req.body.password;
+        const email = req.body.email;
+        const password = req.body.password;
 
-    let user = await client.user.findFirst({
-        where: {
-            email: email
+        let user = await client.user.findFirst({
+            where: {
+                email: email
+            }
+        });
+
+        if(!user) {
+            res.status(404).json({
+                message: "User does not exist"
+            })
+            return;
         }
-    });
 
-    if(!user) {
-        res.status(404).json({
-            message: "User does not exist"
+        const validity = verifyPassword(password, user.password);
+
+        if(!validity) {
+            res.status(404).json({
+                message: "Incorrect credentials"
+            })
+            return;
+        }
+
+        const token = await generateToken(user.id);
+
+        res.json({
+            token: token
         })
-        return;
-    }
-
-    const validity = verifyPassword(password, user.password);
-
-    if(!validity) {
-        res.status(404).json({
-            message: "Incorrect credentials"
-        })
-        return;
-    }
-
-    const token = await generateToken(user.id);
-
-    res.json({
-        token: token
-    })
     } catch(e) {
         res.status(500).json ({
             message: "Error signing in",
