@@ -1,5 +1,5 @@
 import express from 'express';
-import {signin, signup, getMessages } from "../routeHandlers/userHandler.js"
+import {signin, signup } from "../routeHandlers/userHandler.js"
 import { middleware } from './middleware.js';
 
 let userRouter = express.Router();

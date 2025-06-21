@@ -1,5 +1,5 @@
 import { WebSocketServer, WebSocket } from "ws";
-import { ConnectAction, SendMessage, updateMap } from "./handling/functions";
+import { ConnectAction, SendMessage } from "./handling/functions";
 
 const liveMap = new Map();
 const wss = new WebSocketServer({port: 8080});
@@ -11,7 +11,7 @@ wss.on("connection", (socket) => {
 
         const parsedMessage = JSON.parse(e);
 
-        if(parsedMessage.type == "Connect") {
+        if(parsedMessage.type === "Connect") {
             ConnectAction(liveMap, parsedMessage, socket);
         }
 
@@ -30,7 +30,7 @@ wss.on("connection", (socket) => {
             }
 
             liveMap.forEach((ids, currSocket) => {
-                if(ids.roomId == parsedMessage.roomId &&  currSocket != socket && currSocket.readyState === WebSocket.OPEN) {
+                if(ids.roomId === parsedMessage.roomId &&  currSocket !== socket && currSocket.readyState === WebSocket.OPEN) {
                     currSocket.send(JSON.stringify(broadcasting));
                 }
             });
