@@ -6,36 +6,45 @@ import { CreateUserSchema } from "../utils/zodValidation.js";
 
 export const signup = async(req, res) => {
 
-    const result = await CreateUserSchema.safeParse(req.body);
+    try {
+        const result = await CreateUserSchema.safeParse(req.body);
 
-    if(!result.success) {
-        res.status(403).json ({
-            message: res.error.message
-        })
-        return;
-    }
-
-    const email = req.body.email;
-    const password = req.body.password;
-
-    const hashedPassword = await hashPassword(password);
-
-    let user = await client.user.create ({
-        data: {
-            email: email,
-            password: hashedPassword
+        if(!result.success) {
+            res.status(403).json ({
+                message: res.error.message
+            })
+            return;
         }
-    })
 
-    res.json({
-        message: "user created succesfully!",
-        id: user.id
-    })
+        const email = req.body.email;
+        const password = req.body.password;
+
+        const hashedPassword = await hashPassword(password);
+
+        let user = await client.user.create ({
+            data: {
+                email: email,
+                password: hashedPassword
+            }
+        })
+
+        res.json({
+            message: "user created succesfully!",
+            id: user.id
+        })
+    }
+    catch(e) {
+        res.status(500).json ({
+            message: "Error signin up!",
+            error: e
+        })
+    }
 }
 
 
 export const signin = async(req, res) => {
 
+    try {
     const email = req.body.email;
     const password = req.body.password;
 
@@ -55,7 +64,7 @@ export const signin = async(req, res) => {
     const validity = verifyPassword(password, user.password);
 
     if(!validity) {
-        res.json({
+        res.status(404).json({
             message: "Incorrect credentials"
         })
         return;
@@ -66,4 +75,10 @@ export const signin = async(req, res) => {
     res.json({
         token: token
     })
+    } catch(e) {
+        res.status(500).json ({
+            message: "Error signing in",
+            error: e
+        })
+    }
 }
