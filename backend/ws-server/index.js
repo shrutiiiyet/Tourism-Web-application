@@ -1,5 +1,5 @@
 import { WebSocketServer, WebSocket } from "ws";
-import { ConnectAction, SendMessage, updateMap } from "./handling/functions";
+import { ConnectAction, SendMessage } from "./handling/functions";
 
 const liveMap = new Map();
 const wss = new WebSocketServer({port: 8080});
