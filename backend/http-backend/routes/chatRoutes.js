@@ -1,5 +1,5 @@
 import express from 'express';
-import {signin, signup, getMessages } from "../routeHandlers/userHandler.js"
+import { getMessages } from "../routeHandlers/userHandler.js"
 import { middleware } from './middleware.js';
 
 const chatRouter = express.Router();
