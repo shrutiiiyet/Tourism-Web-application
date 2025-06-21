@@ -21,7 +21,8 @@ datasource db {
 }
 
 model User {
-  id                     String               @unique
+  id                     String               @id @default(uuid())
+  email                  String               @unique
   password               String
   profileImage           String?   
   travelPlans            TravelPlan[]
@@ -68,11 +69,11 @@ model ConnectionMember {
 }
 
 model Message {
-  id                       String             @id @default(uuid())
-  content                  String
-  senderId                 String
-  roomId                   String
-  sender                   User               @relation(fields: [senderId], references: [id])
-  room                     ConnectionRoom     @relation(fields: [roomId], references: [id])
-  createdAt                DateTime           @default(now())
+  id                     String             @id @default(uuid())
+  content                String
+  senderId               String
+  roomId                 String
+  sender                 User               @relation(fields: [senderId], references: [id])
+  room                   ConnectionRoom     @relation(fields: [roomId], references: [id])
+  createdAt              DateTime           @default(now())
 }
