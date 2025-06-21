@@ -1,4 +1,4 @@
-import client from "../../../db/prisma/index.js";
+import { client } from "../../../db/prisma/index.js";
 import { hashPassword, verifyPassword } from '../utils/bcrypt.js';
 import { generateToken } from "../utils/jwt.js";
 import { CreateUserSchema } from "../utils/zodValidation.js";

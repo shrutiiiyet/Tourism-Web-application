@@ -30,6 +30,7 @@ model User {
   connectionMembers      ConnectionMember[]
   createdAt              DateTime             @default(now())
   updatedAt              DateTime             @updatedAt
+  messageId              String
 }
 
 model TravelPlan {
@@ -69,11 +70,12 @@ model ConnectionMember {
 }
 
 model Message {
-  id                     String             @id @default(uuid())
+  id                     String                @id @default(uuid())
+  type                   String
   content                String
   senderId               String
   roomId                 String
-  sender                 User               @relation(fields: [senderId], references: [id])
-  room                   ConnectionRoom     @relation(fields: [roomId], references: [id])
-  createdAt              DateTime           @default(now())
+  sender                 User                  @relation(fields: [senderId], references: [id])
+  room                   ConnectionRoom        @relation(fields: [roomId], references: [id])
+  createdAt              DateTime              @default(now())
 }
