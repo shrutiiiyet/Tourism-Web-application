@@ -6,4 +6,4 @@ const chatRouter = express.Router();
 
 chatRouter.use(middleware);
 
-chatRouter.get(':roomId', getMessages);
+chatRouter.get('/:roomId', getMessages);
