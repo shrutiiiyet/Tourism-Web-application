@@ -4,6 +4,13 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+//inputs {
+    // type : "join"/"chat",
+    // payload: {
+    //     "roomId"/"message"
+    // }
+//}
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,7 +21,58 @@ datasource db {
 }
 
 model User {
-  id              String       @id      @default(uuid())
-  userName        String       @unique
-  password        String
+  id                     String               @unique
+  password               String
+  profileImage           String?   
+  travelPlans            TravelPlan[]
+  messages               Message[]
+  connectionMembers      ConnectionMember[]
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+}
+
+model TravelPlan {
+  id                     String               @id @default(uuid())
+  user                   User                 @relation(fields: [userId], references: [id])
+  userId                 String
+  destination            String
+  travelDate             DateTime
+  timeSlot               String               //HH : MM
+  isActive               Boolean              @default(true)
+  createdAt              DateTime             @default(now())
+  connections            ConnectionRoom[]     // connections tied to this plan
+}
+
+
+model ConnectionRoom {
+  id                     String               @id @default(uuid())
+  roomname               String?
+  travelPlanId           String     // ties to the relevant plan
+  travelPlan             TravelPlan           @relation(fields: [travelPlanId], references: [id])
+  createdAt              DateTime             @default(now())
+  members                ConnectionMember[]
+  messages               Message[]
+  
+}
+
+
+model ConnectionMember {
+  id                     String                @id @default(uuid())
+  userId                 String
+  roomId                 String
+  joinedAt               DateTime              @default(now())
+  user                   User                  @relation(fields: [userId], references: [id])
+  room                   ConnectionRoom        @relation(fields: [roomId], references: [id])
+
+  @@unique([userId, roomId]) // Prevent duplicate entries
+}
+
+model Message {
+  id                       String             @id @default(uuid())
+  content                  String
+  senderId                 String
+  roomId                   String
+  sender                   User               @relation(fields: [senderId], references: [id])
+  room                     ConnectionRoom     @relation(fields: [roomId], references: [id])
+  createdAt                DateTime           @default(now())
 }
