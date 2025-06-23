@@ -2,9 +2,9 @@ import client from "../../../db/prisma"
 
 export const getTravelPlans = async(req, res) => {
 
-    const destination = req.params.filter.destination;
-    const timeSlot = req.params.filter.timeSlot;
-    const date = req.params.filter.date;
+    const destination = req.params.destination;
+    const timeSlot = req.params.timeSlot;
+    const date = req.params.date;
 
     if(destination && !timeSlot && !date) {
         let plans = await client.travelPlan.findMany({
@@ -22,7 +22,7 @@ export const getTravelPlans = async(req, res) => {
     if(timeSlot && !destination && !date) {
         let plans = await client.travelPlan.findMany({
             where: {
-                timeSlot: time
+                timeSlot: timeSlot
             }
         })
 
@@ -59,7 +59,7 @@ export const getTravelPlans = async(req, res) => {
         return;
     }
 
-    if(!destination && timeSlot && date) {
+    if(destination && !timeSlot && date) {
         let plans = await client.travelPlan.findMany({
             where: {
                 destination,
