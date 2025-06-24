@@ -37,7 +37,7 @@ export const connectPeople = async(req, res) => {
         const userId = req.id;
         const travelPlanId = req.body.travelPlanId;
 
-        let room = await client.connectionRoom.findFirst ({
+        let room = await client.ConnectionRoom.findFirst ({
             where: {
                 travelPlanId,
             }

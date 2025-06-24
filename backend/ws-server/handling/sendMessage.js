@@ -4,7 +4,7 @@ import { client } from "../../../db/prisma";
 export const SendMessage = async(parsedMessage) => {
 
     const { userId, roomId, content } = parsedMessage;
-    const savedMessage = await client.Message.create({
+    const savedMessage = await client.message.create({
         data: {
             content,
             sender: { 
