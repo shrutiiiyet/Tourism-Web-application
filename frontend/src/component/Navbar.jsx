@@ -1,24 +1,33 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaUser, FaPlaneDeparture } from "react-icons/fa";
 
 const Navbar = () => {
   return (
-    <div className="bg-blue-900 text-white shadow-md">
-      
-      <div className="flex justify-between items-center px-6 py-3 border-b border-gray-700">
-        <div className="text-2xl  font-sans font-semibold">Logo</div>
-        <div className="space-x-6">
-          <button className="hover:text-blue-400">SignIn</button>
-          <button className="hover:text-blue-400">SignUp</button>
+    <div className="sticky top-0 z-50">
+      {/* Top Navbar */}
+      <div className="flex justify-between items-center px-6 py-3 bg-[#001f3f] text-white shadow-md">
+        <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
+          <FaPlaneDeparture className="text-green-400" />
+            Trekker
+        </Link>
+
+        <div className="flex gap-4 text-sm">
+          <button className="bg-transparent border border-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition">
+            Sign In
+          </button>
+          <button className="bg-green-500 px-4 py-1 rounded-full text-white font-semibold hover:scale-105 transition">
+            Sign Up
+          </button>
         </div>
       </div>
 
-      {/* 2 Row */}
-      <div className="flex justify-center font-serif space-x-45 py-2 text-lg font-medium border-b border-gray-700">
-
-        <button className="hover:border-b-2 hover:border-blue-500">Explore</button>
-        <button className="hover:border-b-2 hover:border-blue-500">Destinations</button>
-        <button className="hover:border-b-2 hover:border-blue-500">Offers</button>
-        <button className="hover:border-b-2 hover:border-blue-500">Find Travelmate</button>
+      {/* Bottom Navbar */}
+      <div className="flex justify-center gap-10 px-6 py-2 bg-[#004d40]/90 text-white text-sm font-semibold shadow-md">
+        <Link to="/" className="hover:text-green-300 transition">Explore</Link>
+        <Link to="/destinations" className="hover:text-green-300 transition">Destinations</Link>
+        <Link to="/offers" className="hover:text-green-300 transition">Offers</Link>
+        <Link to="/find-travel-mate" className="hover:text-green-300 transition">Find Travel Mate</Link>
       </div>
     </div>
   );
