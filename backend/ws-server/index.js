@@ -1,7 +1,7 @@
 import { WebSocketServer, WebSocket } from "ws";
 import { ConnectAction, SendMessage } from "./handling/functions";
 
-const liveMap = new Map();
+const liveMap = new Map(); //Map<userId, Map<roomId, Set<socketId>>
 const wss = new WebSocketServer({port: 8080});
 
 wss.on("connection", (socket) => {
