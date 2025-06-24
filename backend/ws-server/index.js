@@ -1,5 +1,7 @@
-import { WebSocketServer, WebSocket } from "ws";
-import { ConnectAction, SendMessage } from "./handling/functions";
+import { WebSocketServer } from "ws";
+import { SendMessage } from "./handling/sendMessage";
+import { ConnectAction } from "./handling/connection";
+import { broadcastMessage } from "./handling/broadcasting";
 
 const liveMap = new Map(); //Map<userId, Map<roomId, Set<socketId>>
 const wss = new WebSocketServer({port: 8080});
@@ -18,22 +20,8 @@ wss.on("connection", (socket) => {
         else if(parsedMessage.type == "Send_Message") {
 
             const savedMessage = SendMessage(parsedMessage);
-            const broadcasting = {
-                message: {
-                    type: "New_Message",
-                    id: savedMessage.id,
-                    content: (await savedMessage).content,
-                    senderId: (await savedMessage).senderId,
-                    roomId: (await savedMessage).roomId,
-                    createdAt: (await savedMessage).createdAt
-                }
-            }
-
-            liveMap.forEach((ids, currSocket) => {
-                if(ids.roomId === parsedMessage.roomId &&  currSocket !== socket && currSocket.readyState === WebSocket.OPEN) {
-                    currSocket.send(JSON.stringify(broadcasting));
-                }
-            });
+            broadcastMessage(savedMessage, parsedMessage, liveMap, socket);
+            
         }
     })
 })
