@@ -66,7 +66,7 @@ export const connectPeople = async(req, res) => {
                 }
             })
         }
-
+      
         res.status(200).json ({
             roomId: room.id,
             message: "Connected to travel plan successfully!"
@@ -78,4 +78,5 @@ export const connectPeople = async(req, res) => {
             error: e
         })
     }
+    });
 }
