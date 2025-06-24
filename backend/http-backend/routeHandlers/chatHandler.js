@@ -21,4 +21,6 @@ export const getMessages = async (req, res) => {
             }
         }
     });
+
+    return messages;
 }
