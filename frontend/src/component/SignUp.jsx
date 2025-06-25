@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 import { FaUser, FaEnvelope, FaPhone, FaLock, FaCalendar } from "react-icons/fa";
 
 const SignUp = () => {
-  // ✅ onClick handler for the Sign Up button
+  
   const handleSignUpClick = () => {
-    alert("✅ Sign Up button clicked!");
-    console.log("📦 Sign Up form triggered!");
+    alert(" Sign Up button clicked!");
+    console.log(" Sign Up form triggered!");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0f2027] via-[#2c5364] to-[#00bf8f] flex items-center justify-center px-4">
       <div className="w-full max-w-2xl text-white bg-white/10 backdrop-blur-md p-10 rounded-2xl shadow-2xl">
-        <h2 className="text-4xl font-bold text-center mb-2">🚀 Create Your Account</h2>
+        <h2 className="text-4xl font-bold text-center mb-2">Create Your Account</h2>
         <p className="text-center text-gray-200 mb-8">
           Join <span className="text-lime-300 font-bold">Trekker</span> to plan your next big trip!
         </p>
@@ -135,7 +135,7 @@ const SignUp = () => {
             </label>
           </div>
 
-          {/* ✅ Button with onClick */}
+          
           <button
             type="submit"
             onClick={handleSignUpClick}

@@ -20,17 +20,17 @@ const SignIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      alert("❌ Please fill in both email and password.");
+      alert("Please fill in both email and password.");
       return;
     }
-    alert("✅ Form submitted");
+    alert("Form submitted");
     console.log("Submitted:", formData);
   };
 
   
   const handleClick = () => {
-    console.log("🔘 Sign In button clicked");
-    alert("🟢 Sign In button clicked!");
+    console.log(" Sign In button clicked");
+    alert(" Sign In button clicked!");
   };
 
   return (
@@ -84,7 +84,7 @@ const SignIn = () => {
             </a>
           </div>
 
-          {/* ✅ Button with onClick event */}
+         
           <button
             type="submit"
             onClick={handleClick}
