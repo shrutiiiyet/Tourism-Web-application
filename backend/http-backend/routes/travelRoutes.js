@@ -13,5 +13,4 @@ travelRouter.post('/create', CreateRoom);
 travelRouter.post('/join', joinRoom);
 travelRouter.post('/leave', leaveRoom);
 
-
 export default travelRouter
