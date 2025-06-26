@@ -1,4 +1,4 @@
-import { client } from "../index"
+import client from "../index.js"
 
 export const addMessage = async (roomId, userId,content) => {
   return await client.message.create({
