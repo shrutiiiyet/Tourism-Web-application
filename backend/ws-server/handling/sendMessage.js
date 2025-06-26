@@ -1,27 +1,9 @@
-import { client } from "../../../db/prisma";
+import { addMessage } from "../../../db/prisma/services/messageService";
 
 
 export const SendMessage = async(parsedMessage) => {
 
     const { userId, roomId, content } = parsedMessage;
-    const savedMessage = await client.message.create({
-        data: {
-            content,
-            sender: { 
-                connect: { 
-                    id: userId 
-                } 
-            },
-            room: { 
-                connect: {
-                    id: roomId 
-                    } 
-                }
-        },
-        include: {
-            sender: true
-        }
-    });
-
+    const savedMessage = addMessage(roomId, userId, content);
     return savedMessage;
 }
