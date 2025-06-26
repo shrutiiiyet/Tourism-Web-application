@@ -1,8 +1,8 @@
-import { client } from "../../../db/prisma/index.js";
-import { hashPassword, verifyPassword } from '../utils/bcrypt.js';
-import { generateToken } from "../utils/jwt.js";
-import { CreateUserSchema } from "../utils/zodValidation.js";
-
+import { getCreatedRoomsByUserId } from "../../../db/prisma/services/roomService";
+import { CreateUserSchema } from "../utils/zodValidation";
+import { hashPassword, verifyPassword } from '../utils/bcrypt';
+import { generateToken } from '../utils/jwt'
+import { createUser, getUserByEmail } from "../../../db/prisma/services/userService";
 
 export const signup = async(req, res) => {
 
@@ -21,12 +21,7 @@ export const signup = async(req, res) => {
 
         const hashedPassword = await hashPassword(password);
 
-        let user = await client.user.create ({
-            data: {
-                email: email,
-                password: hashedPassword
-            }
-        })
+        let user = createUser(email, hashedPassword);
 
         res.json({
             message: "user created succesfully!",
@@ -48,11 +43,7 @@ export const signin = async(req, res) => {
         const email = req.body.email;
         const password = req.body.password;
 
-        let user = await client.user.findFirst({
-            where: {
-                email: email
-            }
-        });
+        let user = getUserByEmail(email);
 
         if(!user) {
             res.status(404).json({
@@ -75,10 +66,62 @@ export const signin = async(req, res) => {
         res.json({
             token: token
         })
-    } catch(e) {
+    } 
+    catch(e) {
         res.status(500).json ({
             message: "Error signing in",
             error: e
         })
     }
+}
+
+export const getMyRooms = async (req, res) => {
+  try {
+
+    const userId = req.id;
+    const user = await getCreatedRoomsByUserId(userId);
+    if (!user) {
+      res.status(404).json({
+        message: "User not found.",
+      });
+      return;
+    }
+
+    if (!user.rooms?.length) {
+      res.json({
+        message: "No rooms available.",
+        data: {
+          userName: user.name,
+          rooms: [],
+        },
+      });
+      return;
+    }
+
+    const formattedRooms = user.rooms.map((room) => ({
+      roomId: room.id,
+      roomName: room.roomName,
+      createdAt: room.createdAt, // Sending raw timestamp
+      participants: room.members.map((participant) => participant.name), // Correct relation key
+      noOfParticipants: room.users.length, // Correct relation key
+    }));
+
+    res.json({
+      message: "Admin rooms fetched successfully.",
+      data: {
+        userName: user.name,
+        rooms: formattedRooms,
+      },
+    });
+    return;
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error.",
+    });
+    return;
+  }
+};
+
+export const getPlans = (req, res) => {
+
 }
