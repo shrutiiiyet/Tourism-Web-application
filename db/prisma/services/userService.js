@@ -1,4 +1,4 @@
-import { client } from "../index";
+import client from "../index.js";
 
 export const createUser = async (email,hashedPassword) => {
   
