@@ -1,13 +1,12 @@
-import { CreateRoomSchema } from "../utils/zodValidation";
+import { CreateRoomSchema } from "../utils/zodValidation.js";
 import { getRoomByName,
    createRoom, 
    getRoomUsers,
-    getRoomByRoomId, 
-    connectUserWithRoom, 
+    getRoomByRoomId,  
     deleteRoom,
     removeUserFromRoom
-   } from "../../../db/prisma/services/roomService";
-import { connectUserWithRoom } from "../../../db/prisma/services/userService";
+   } from "../../../db/prisma/services/roomService.js";
+import { connectUserWithRoom } from "../../../db/prisma/services/userService.js";
 
 export const CreateRoom = async (req, res) => {
   try {

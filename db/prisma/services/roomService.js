@@ -1,4 +1,4 @@
-import { client } from "../index";
+import client from "../index.js";
 
 export const createRoom = async (name, destination, travelDate, timeSlot ,userId) => {
   return await client.travelPlan.create({

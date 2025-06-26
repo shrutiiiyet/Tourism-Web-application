@@ -1,8 +1,8 @@
-import { getCreatedRoomsByUserId } from "../../../db/prisma/services/roomService";
-import { CreateUserSchema } from "../utils/zodValidation";
-import { hashPassword, verifyPassword } from '../utils/bcrypt';
-import { generateToken } from '../utils/jwt'
-import { createUser, getUserByEmail } from "../../../db/prisma/services/userService";
+import { getCreatedRoomsByUserId } from "../../../db/prisma/services/roomService.js";
+import { CreateUserSchema } from "../utils/zodValidation.js";
+import { hashPassword, verifyPassword } from '../utils/bcrypt.js';
+import { generateToken } from '../utils/jwt.js'
+import { createUser, getUserByEmail } from "../../../db/prisma/services/userService.js";
 
 export const signup = async(req, res) => {
 

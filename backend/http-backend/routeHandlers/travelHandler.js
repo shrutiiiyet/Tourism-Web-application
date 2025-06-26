@@ -5,7 +5,7 @@ import { filterByDate,
     filterByTimeAndDestination, 
     filterByTimeDateDestination, 
     filterByTimeSlot
- } from "../../../db/prisma/services/roomService";
+ } from "../../../db/prisma/services/roomService.js";
 
 export const getTravelPlans = async(req, res) => {
 
