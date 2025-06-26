@@ -1,23 +1,11 @@
-import { client } from "../../../db/prisma";
-
+import {  clearRoomMessages, getRoomMessages } from "../../../db/prisma/services/messageService";
+import { getRoomByRoomId } from "../../../db/prisma/services/roomService";
 
 export const getMessages = async (req, res) => {
 
     try {
         const roomId = req.params.roomId;
-        const userId = req.id;
-        const messages = await client.message.findMany({
-            where: {
-                roomId: roomId
-            },
-            orderBy: {
-                createdAt: 'desc'
-            },
-            take: 100,
-            include: {
-                id: userId,
-            }
-        });
+        const messages = getRoomMessages(roomId)
 
         res.json({
             messages: messages
@@ -31,51 +19,21 @@ export const getMessages = async (req, res) => {
     }
 }
 
-export const connectPeople = async(req, res) => {
+export const clearRoom = async(req, res) => {
+    const roomId = req.body.roomId;
+    const userId = req.id;
 
-    try {
-        const userId = req.id;
-        const travelPlanId = req.body.travelPlanId;
-
-        let room = await client.connectionRoom.findFirst ({
-            where: {
-                travelPlanId,
-            }
+    const admin = getRoomByRoomId(roomId);
+    if(admin.userId !== userId) {
+        res.status(403).json ({
+            success: false,
+            message: "Only admin can delete messages"
         })
+    } 
 
-        if(!room) {
-            room = await client.connectionRoom.create ({
-                data: {
-                    travelPlanId
-                }
-            })
-        }
-
-        const existingMember = await client.connectionMember.findFirst ({
-            where: {
-                userId: userId,
-                roomId: room.id
-            }
-        })
-
-        if(!existingMember) {
-            await client.connectionMember.create({
-                data: {
-                    userId,
-                    roomId: room.id
-                }
-            })
-        }
-
-        res.status(200).json ({
-            roomId: room.id,
-            message: "Connected to travel plan successfully!"
-        })
-    }
-    catch(e) {
-        res.status(500).json({
-            message: "Something went wrong!",
-            error: e
-        })
-    }
+    clearRoomMessages(roomId);
+    res.json({
+        success :true,
+        message: "All messages cleared succesfully"
+    })
 }

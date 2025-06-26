@@ -1,4 +1,11 @@
-import client from "../../../db/prisma"
+import { filterByDate, 
+    filterByDateAndDestination, 
+    filterByDateAndTime, 
+    filterByDestination, 
+    filterByTimeAndDestination, 
+    filterByTimeDateDestination, 
+    filterByTimeSlot
+ } from "../../../db/prisma/services/roomService";
 
 export const getTravelPlans = async(req, res) => {
 
@@ -7,24 +14,15 @@ export const getTravelPlans = async(req, res) => {
     const date = req.params.date;
 
     if(destination && !timeSlot && !date) {
-        let plans = await client.travelPlan.findMany({
-            where: {
-                destination
-            }
-        })
-
+        const plans = filterByDestination(destination);
         res.json({
-            plans: plans
+            plans
         })
         return;
     }
 
     if(timeSlot && !destination && !date) {
-        let plans = await client.travelPlan.findMany({
-            where: {
-                timeSlot: time
-            }
-        })
+        let plans = filterByTimeSlot(timeSlot)
 
         res.status(200).json({
             plans: plans
@@ -33,11 +31,7 @@ export const getTravelPlans = async(req, res) => {
     }
 
     if(!destination && !timeSlot && date) {
-        let plans = await client.travelPlan.findMany({
-            where: {
-                date
-            }
-        })
+        let plans = filterByDate(date);
 
         res.json({
             plans: plans
@@ -46,12 +40,7 @@ export const getTravelPlans = async(req, res) => {
     }
 
     if(destination && timeSlot && !date) {
-        let plans = await client.travelPlan.findMany({
-            where: {
-                destination,
-                timeSlot
-            }
-        })
+        let plans = filterByTimeAndDestination(timeSlot, destination);
 
         res.json({
             plans: plans
@@ -60,12 +49,7 @@ export const getTravelPlans = async(req, res) => {
     }
 
     if(!destination && timeSlot && date) {
-        let plans = await client.travelPlan.findMany({
-            where: {
-                destination,
-                date
-            }
-        })
+        let plans = filterByDateAndTime(date, timeSlot)
 
         res.json({
             plans: plans
@@ -73,13 +57,8 @@ export const getTravelPlans = async(req, res) => {
         return;
     }
 
-    if(!destination && timeSlot && date) {
-        let plans = await client.travelPlan.findMany({
-            where: {
-                timeSlot,
-                date
-            }
-        })
+    if(destination && !timeSlot && date) {
+        let plans = filterByDateAndDestination(date, destination);
 
         res.json({
             plans: plans
@@ -88,13 +67,7 @@ export const getTravelPlans = async(req, res) => {
     }
 
     if(destination && timeSlot && date) {
-        let plans = await client.travelPlan.findMany({
-            where: {
-                destination,
-                timeSlot,
-                date
-            }
-        })
+        let plans = filterByTimeDateDestination(timeSlot, date, destination);
 
         res.json({
             plans: plans
