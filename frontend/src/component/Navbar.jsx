@@ -1,20 +1,40 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaUser, FaPlaneDeparture } from "react-icons/fa";
 
 const Navbar = () => {
   return (
-    <div className='flex justify-between  p-2 text-2xl bg-blue-400'>
-          <div>
-            Adventure
-          </div>
-           <div>
-                <ul className='flex gap-4 pr-6'>
-                  <li>Explore</li>
-                  <li>Signin</li>
-                  <li>Signup</li>
-                </ul>
-           </div>
-    </div>
-  )
-}
+    <div className="sticky top-0 z-50">
+      {/* Top Navbar */}
+      <div className="flex justify-between items-center px-6 py-3 bg-[#001f3f] text-white shadow-md">
+        <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
+          <FaPlaneDeparture className="text-green-400" />
+          Trekker
+        </Link>
 
-export default Navbar
+        <div className="flex gap-4 text-sm">
+          <Link to="/signin">
+            <button className="bg-transparent border border-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition">
+              Sign In
+            </button>
+          </Link>
+          <Link to="/signup">
+            <button className="bg-green-500 px-4 py-1 rounded-full text-white font-semibold hover:scale-105 transition">
+              Sign Up
+            </button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Bottom Navbar */}
+      <div className="flex justify-center gap-10 px-6 py-2 bg-[#004d40]/90 text-white text-sm font-semibold shadow-md">
+        <Link to="/" className="hover:text-green-300 transition">Explore</Link>
+        <Link to="/destinations" className="hover:text-green-300 transition">Destinations</Link>
+        <Link to="/offers" className="hover:text-green-300 transition">Offers</Link>
+        <Link to="/find-travel-mate" className="hover:text-green-300 transition">Find Travel Mate</Link>
+      </div>
+    </div>
+  );
+};
+
+export default Navbar;
