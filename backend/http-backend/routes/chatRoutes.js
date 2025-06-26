@@ -8,3 +8,5 @@ chatRouter.use(middleware);
 
 chatRouter.get('/:roomId', getMessages);
 chatRouter.post('/connect', connectPeople); //to add in the group
+
+export default chatRouter;

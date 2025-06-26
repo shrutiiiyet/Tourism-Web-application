@@ -1,4 +1,4 @@
-import { client } from "../../../db/prisma";
+import client from "../../../db/prisma/Client.js";
 
 
 export const getMessages = async (req, res) => {
@@ -78,5 +78,4 @@ export const connectPeople = async(req, res) => {
             error: e
         })
     }
-    });
-}
+    };

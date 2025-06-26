@@ -5,4 +5,4 @@ const travelRouter = express.Router();
 
 travelRouter.get('/:filter', getTravelPlans);
 
-export default travelRouter
+export default travelRouter;
