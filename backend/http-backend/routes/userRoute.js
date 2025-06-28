@@ -1,6 +1,6 @@
 import express from 'express';
 import {getMyRooms, signin, signup } from "../routeHandlers/userHandler.js"
-import { middleware } from './middleware.js';
+import { middleware } from '../utils/middleware.js';
 
 let userRouter = express.Router();
  
