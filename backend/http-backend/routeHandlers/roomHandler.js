@@ -21,6 +21,8 @@ export const CreateRoom = async (req, res) => {
     }
     const { roomName, destination, travelDate, timeSlot } = parsedData.data;
 
+    const userId = req.id;
+
     // Check if room already exists
     const existingRoom = await getRoomByName(roomName);
     if (existingRoom) {
@@ -79,7 +81,7 @@ export const joinRoom = async (req, res) => {
     }
 
     // Check if the user is already a member
-    const isAlreadyMember = room.users.some((user) => user.id === userId);
+    const isAlreadyMember = room.members.some((user) => user.id === userId);
 
     if (!isAlreadyMember) {
       await connectUserWithRoom(roomId, userId);
@@ -174,10 +176,10 @@ export const leaveRoom = async (req, res) => {
        message: "Left the room." 
       });
     return;
-  } catch {
+  } catch(e) {
     res
       .status(500)
-      .json({ success: false, error: "Server error." });
+      .json({ success: false, error: e });
     return;
   }
 };

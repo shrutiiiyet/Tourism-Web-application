@@ -22,7 +22,7 @@ datasource db {
 
 model User {
   id                     String               @id @default(uuid())
-  name                   String
+  name                   String?                
   email                  String               @unique
   password               String
   profileImage           String?   
@@ -43,7 +43,7 @@ model TravelPlan {
   timeSlot               String               //Morning, Noon, Evening, Night, Mid-night
   isActive               Boolean              @default(true)
   createdAt              DateTime             @default(now())
-  roomname               String?              @unique
+  roomName               String               @unique
   members                User[]               @relation("TravelPlanMembers")
   messages               Message[]
 }
