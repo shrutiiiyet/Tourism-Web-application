@@ -43,7 +43,7 @@ export const signin = async(req, res) => {
         const email = req.body.email;
         const password = req.body.password;
 
-        let user = getUserByEmail(email);
+        let user = await getUserByEmail(email);
 
         if(!user) {
             res.status(404).json({
@@ -51,8 +51,9 @@ export const signin = async(req, res) => {
             })
             return;
         }
-
-        const validity = verifyPassword(password, user.password);
+        
+        const hashedPassword = user.password;
+        const validity = verifyPassword(password, hashedPassword);
 
         if(!validity) {
             res.status(404).json({
@@ -79,6 +80,7 @@ export const getMyRooms = async (req, res) => {
   try {
 
     const userId = req.id;
+    console.log("userId before call" + " " + userId)
     const user = await getCreatedRoomsByUserId(userId);
     if (!user) {
       res.status(404).json({
@@ -87,7 +89,7 @@ export const getMyRooms = async (req, res) => {
       return;
     }
 
-    if (!user.rooms?.length) {
+    if (!user.createdPlans?.length) {
       res.json({
         message: "No rooms available.",
         data: {
@@ -97,15 +99,13 @@ export const getMyRooms = async (req, res) => {
       });
       return;
     }
-
-    const formattedRooms = user.rooms.map((room) => ({
+    const formattedRooms = user.createdPlans.map((room) => ({
       roomId: room.id,
       roomName: room.roomName,
       createdAt: room.createdAt, // Sending raw timestamp
       participants: room.members.map((participant) => participant.name), // Correct relation key
-      noOfParticipants: room.users.length, // Correct relation key
+      noOfParticipants: room.members.length, // Correct relation key
     }));
-
     res.json({
       message: "Admin rooms fetched successfully.",
       data: {
