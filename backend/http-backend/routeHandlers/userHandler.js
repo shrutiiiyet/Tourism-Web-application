@@ -43,7 +43,7 @@ export const signin = async(req, res) => {
         const email = req.body.email;
         const password = req.body.password;
 
-        let user = getUserByEmail(email);
+        let user = await getUserByEmail(email);
 
         if(!user) {
             res.status(404).json({
@@ -52,7 +52,7 @@ export const signin = async(req, res) => {
             return;
         }
 
-        const validity = verifyPassword(password, user.password);
+        const validity = await verifyPassword(password, user.password);
 
         if(!validity) {
             res.status(404).json({

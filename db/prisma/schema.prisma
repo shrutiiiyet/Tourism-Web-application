@@ -50,7 +50,7 @@ model TravelPlan {
 
 model Message {
   id                     String                @id @default(uuid())
-  type                   String
+  type                   String?
   content                String
   senderId               String
   roomId                 String
