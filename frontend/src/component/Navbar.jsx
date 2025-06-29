@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaUser, FaPlaneDeparture } from "react-icons/fa";
+import { FaPlaneDeparture } from "react-icons/fa";
+import ProfileDropdown from "./Profile/ProfileDropdown"; 
 
 const Navbar = () => {
   return (
@@ -9,16 +10,20 @@ const Navbar = () => {
       <div className="flex justify-between items-center px-6 py-3 bg-[#001f3f] text-white shadow-md">
         <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
           <FaPlaneDeparture className="text-green-400" />
-            Trekker
+          Trekker
         </Link>
 
-        <div className="flex gap-4 text-sm">
+        <div className="flex items-center gap-4 text-sm">
           <button className="bg-transparent border border-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition">
             Sign In
           </button>
           <button className="bg-green-500 px-4 py-1 rounded-full text-white font-semibold hover:scale-105 transition">
             Sign Up
           </button>
+          {/* Profile Dropdown */}
+          <div className="ml-4">
+            <ProfileDropdown />
+          </div>
         </div>
       </div>
 
