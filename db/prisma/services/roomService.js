@@ -4,12 +4,11 @@ export const createRoom = async (name, destination, travelDate, timeSlot ,userId
   return await client.travelPlan.create({
     data: {
       roomName: name,
-      userId: userId,
       destination,
       travelDate,
       timeSlot,
-      users: {
-        connect: [{ id: userId }], // Automatically connect the admin as a member
+      user: {
+        connect: { id: userId }, // Automatically connect the admin as a member
       },
     },
   });
@@ -24,6 +23,7 @@ export const getRoomByName = async (roomName) => {
 };
 
 export const getRoomsByUserId = async (userId) => {
+  console.log(userId);
   return await client.user.findUnique({
     where: {
       id: userId,
@@ -62,6 +62,7 @@ export const getRoomsByUserId = async (userId) => {
 };
 
 export const getCreatedRoomsByUserId = async (userId) => {
+  console.log(userId + " :in function");
   return await client.user.findUnique({
     where: {
       id: userId,
@@ -93,11 +94,11 @@ export const deleteRoom = async (roomId) => {
 };
 
 export const removeUserFromRoom = async (roomId, userId) => {
-  return await client.room.update({
+  return await client.travelPlan.update({
     where: { id: roomId },
     data: {
-      users: {
-        disconnect: [{ id: userId }],
+      members: {
+        disconnect: { id: userId },
       },
     },
   });

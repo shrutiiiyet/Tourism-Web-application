@@ -9,4 +9,8 @@ app.use(express.json());
 app.use('/user', userRouter);
 app.use('/chat', chatRouter);
 app.use('/plans', travelRouter)
-app.listen(3000);
+
+
+app.listen(3000 , () => {
+    console.log("backen is ruuning on port 3000")
+});

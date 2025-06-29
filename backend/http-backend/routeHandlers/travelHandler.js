@@ -75,3 +75,4 @@ export const getTravelPlans = async(req, res) => {
         return;
     }
 }
+export default getTravelPlans 

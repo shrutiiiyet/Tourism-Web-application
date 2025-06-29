@@ -27,7 +27,7 @@ export const passwordSchema = z
   });
 
 export const timeSchema = z.
-  enum(["Morning, Noon, Evening, Night, Midnight"])
+  enum(["Morning", "Noon", "Evening", "Night", "Midnight"])
 
   
 // Create User Schema (Signup)
@@ -38,8 +38,7 @@ export const CreateUserSchema = z.object({
 
 export const CreateRoomSchema = z.object({
   roomName: z.string().max(50),
-  userId: z.string().nonempty(),
-  destination: z.string().nonempty(),
-  travelDate: z.date(),
+  destination: z.string().trim().nonempty({message: "Destination is required"}),
+  travelDate: z.coerce.date(),
   timeSlot: timeSchema,
 })
