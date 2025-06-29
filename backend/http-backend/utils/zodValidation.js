@@ -26,9 +26,11 @@ export const passwordSchema = z
     message: "Password must include at least one special character",
   });
 
-export const timeSchema = z.
-  enum(["Morning, Noon, Evening, Night, Midnight"])
-  .nonempty({message: "Please specify the time period"})
+export const timeSchema = z
+  .enum(["Morning", "Noon", "Evening", "Night", "Midnight"])
+  .refine(val => !!val, {
+    message: "Please specify the time period"
+  });
 
   
 // Create User Schema (Signup)
@@ -40,7 +42,7 @@ export const CreateUserSchema = z.object({
 export const CreateRoomSchema = z.object({
   roomName: z.string().max(50),
   userId: z.string().nonempty(),
-  destination: z.string().nonempty().trim().nonempty({message: "Destination is required"}),
+  destination: z.string().trim().nonempty({message: "Destination is required"}),
   travelDate: z.date().nonempty({message: "Date is required"}),
   timeSlot: timeSchema,
 })
