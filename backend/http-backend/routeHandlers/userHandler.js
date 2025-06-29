@@ -51,9 +51,8 @@ export const signin = async(req, res) => {
             })
             return;
         }
-        
-        const hashedPassword = user.password;
-        const validity = verifyPassword(password, hashedPassword);
+
+        const validity = await verifyPassword(password, user.password);
 
         if(!validity) {
             res.status(404).json({
