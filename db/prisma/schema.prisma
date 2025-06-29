@@ -22,54 +22,31 @@ datasource db {
 
 model User {
   id                     String               @id @default(uuid())
+  name                   String?                
   email                  String               @unique
   password               String
   profileImage           String?   
-  travelPlans            TravelPlan[]
+  travelPlans            TravelPlan[]          @relation("TravelPlanMembers") // plans user joined
+  createdPlans           TravelPlan[]          @relation("UserToTravelPlan")  // plans user created
   messages               Message[]
-  connectionMembers      ConnectionMember[]
   createdAt              DateTime             @default(now())
   updatedAt              DateTime             @updatedAt
-  messageId              String
 }
 
 
 model TravelPlan {
   id                     String               @id @default(uuid())
-  user                   User                 @relation(fields: [userId], references: [id])
+  user                   User                 @relation("UserToTravelPlan", fields: [userId], references: [id])//admin
   userId                 String
   destination            String
   travelDate             DateTime
-  timeSlot               String               //HH : MM
+  timeSlot               String               //Morning, Noon, Evening, Night, Mid-night
   isActive               Boolean              @default(true)
   createdAt              DateTime             @default(now())
-  connections            ConnectionRoom[]     // connections tied to this plan
-}
-
-
-model ConnectionRoom {
-  id                     String               @id @default(uuid())
-  roomname               String?
-  travelPlanId           String     // ties to the relevant plan
-  travelPlan             TravelPlan           @relation(fields: [travelPlanId], references: [id])
-  createdAt              DateTime             @default(now())
-  members                ConnectionMember[]
+  roomName               String               @unique
+  members                User[]               @relation("TravelPlanMembers")
   messages               Message[]
-  
 }
-
-
-model ConnectionMember {
-  id                     String                @id @default(uuid())
-  userId                 String
-  roomId                 String
-  joinedAt               DateTime              @default(now())
-  user                   User                  @relation(fields: [userId], references: [id])
-  room                   ConnectionRoom        @relation(fields: [roomId], references: [id])
-
-  @@unique([userId, roomId]) // Prevent duplicate entries
-}
-
 
 model Message {
   id                     String                @id @default(uuid())
@@ -78,6 +55,6 @@ model Message {
   senderId               String
   roomId                 String
   sender                 User                  @relation(fields: [senderId], references: [id])
-  room                   ConnectionRoom        @relation(fields: [roomId], references: [id])
+  room                   TravelPlan            @relation(fields: [roomId], references: [id])
   createdAt              DateTime              @default(now())
 }
