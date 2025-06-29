@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaUser, FaPlaneDeparture } from "react-icons/fa";
+import { FaPlaneDeparture } from "react-icons/fa";
+import ProfileDropdown from "./Profile/ProfileDropdown"; 
 
 const Navbar = () => {
   return (
@@ -11,6 +12,19 @@ const Navbar = () => {
           <FaPlaneDeparture className="text-green-400" />
           Trekker
         </Link>
+
+
+        <div className="flex items-center gap-4 text-sm">
+          <button className="bg-transparent border border-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition">
+            Sign In
+          </button>
+          <button className="bg-green-500 px-4 py-1 rounded-full text-white font-semibold hover:scale-105 transition">
+            Sign Up
+          </button>
+          {/* Profile Dropdown */}
+          <div className="ml-4">
+            <ProfileDropdown />
+          </div>
 
         <div className="flex gap-4 text-sm">
           <Link to="/signin">
@@ -23,6 +37,7 @@ const Navbar = () => {
               Sign Up
             </button>
           </Link>
+
         </div>
       </div>
 
