@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from './Navbar';
+import TravelPackageCards from './TravelPackageCards';
 
 
 const Home = () => {
@@ -16,7 +17,8 @@ const Home = () => {
         <h1 className="text-5xl font-bold">WHERE TO GO NEXT ? </h1>
         <p className="mt-4 text-xl">Let us help you map your perfect getaway!</p>
       </div>
-    </div>
+      <TravelPackageCards/>
+      </div>
   );
 };
 
