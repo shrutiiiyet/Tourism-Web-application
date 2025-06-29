@@ -8,8 +8,8 @@ import { handleMessageEvent } from "./messageHandler.js";
 import { logger } from "../utils/logger.js";
 import { PORT } from "../config.js";
 
-export const setupWebSocketServer = (wss) => {
-  wss.on("connection", (socket, request) => {
+export const setupWebSocketServer = async (wss) => {
+  wss.on("connection", async(socket, request) => {
     const url = request.url;
     if (!url) {
       logger.error("Connection request missing URL");
@@ -18,7 +18,7 @@ export const setupWebSocketServer = (wss) => {
     }
 
     const token = getToken(url);
-    const authenticatedUser = authenticateWebSocket(token);
+    const authenticatedUser = await authenticateWebSocket(token);
 
     if (!authenticatedUser) {
       logger.warn("Unauthorized WebSocket connection attempt");
@@ -26,24 +26,28 @@ export const setupWebSocketServer = (wss) => {
       return;
     }
 
-    const userId = authenticatedUser.id;
-    logger.info(`User ${userId} connected`);
+    logger.info(authenticatedUser);
+    socket.userId = authenticatedUser.id;
+    logger.info(`User with userId ${socket.userId} connected`);
+    logger.debug(socket.userId);
 
     // Handle incoming messages
+ 
     socket.on("message", (data) => {
       try {
-        const message = JSON.parse(data.toString());
+        const raw = data?.toString?.() || "No message received";
+        const message = JSON.parse(raw);
 
         switch (message.type) {
           case "room:join":
           case "room:leave":
-            handleRoomEvent(socket, message, userId);
+            handleRoomEvent(socket, message, socket.userId);
             break;
 
           case "message:add":
           case "message:delete":
           case "message:edit":
-            handleMessageEvent(socket, message, userId);
+            handleMessageEvent(socket, message, socket.userId);
             break;
 
           default:
