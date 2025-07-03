@@ -15,7 +15,6 @@ const TravelProfilePage = () => {
       <div className="max-w-5xl mx-auto px-4 py-6">
 
         {/* Header Profile */}
-        {/* ... (keep your existing header code as-is) ... */}
          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-green-600 p-6 text-white shadow-2xl shadow-emerald-500/25 mb-6">
           <div className="absolute inset-0 bg-black/20"></div>
           <div className="absolute top-2 right-2 opacity-10">
@@ -86,7 +85,8 @@ const TravelProfilePage = () => {
           </div>
         </div>
 
-        {/* Conditional Section Rendering */}
+
+        {/*overview, review & achievements*/}
         {activeTab === 'overview' && (
           <div className="bg-gradient-to-br from-slate-900/80 via-gray-900/80 to-slate-800/80 backdrop-blur-xl rounded-2xl p-8 border border-emerald-500/10 shadow-xl mb-6">
             <div className="flex items-center justify-between mb-8">
@@ -101,7 +101,7 @@ const TravelProfilePage = () => {
               <div className="text-xs text-gray-400 font-medium">Latest Updates</div>
             </div>
 
-            {/* Example Journey Card */}
+            {/* Journey Card */}
             <div className="relative border-l-4 border-emerald-500/20 pl-6 ml-2">
               <div className="relative group">
                 <div className="absolute -left-[30px] top-1 w-5 h-5 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 border-4 border-slate-900"></div>
