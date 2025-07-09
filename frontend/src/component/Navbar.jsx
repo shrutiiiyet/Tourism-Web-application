@@ -40,6 +40,7 @@ const Navbar = () => {
 
         </div>
       </div>
+    </div>
 
       {/* Bottom Navbar */}
       <div className="flex justify-center gap-10 px-6 py-2 bg-[#004d40]/90 text-white text-sm font-semibold shadow-md">
@@ -49,7 +50,7 @@ const Navbar = () => {
         <Link to="/find-travel-mate" className="hover:text-green-300 transition">Find Travel Mate</Link>
       </div>
     </div>
-    </div>
+    
   );
 };
 
