@@ -1,4 +1,4 @@
-import client from "../index.js"
+import client from "../index.js";
 
 export const addMessage = async (roomId, userId,content) => {
   return await client.message.create({
@@ -25,6 +25,13 @@ export const editMessage = async (messageId, updatedContent) => {
   });
 };
 
+export const getMessage = async(messageId) => {
+  return await client.message.findUnique({
+    where: {
+      id: messageId
+    }
+  })
+}
 
 export const clearRoomMessages = async (roomId) => {
 
@@ -38,7 +45,6 @@ export const clearRoomMessages = async (roomId) => {
 
   return await client.message.delete({
     where: { roomId },
-    disconnect
   });
 };
 

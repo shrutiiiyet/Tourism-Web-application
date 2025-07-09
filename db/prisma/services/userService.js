@@ -40,3 +40,12 @@ export const connectUserWithRoom = async (roomId, userId) => {
     },
   });
 };
+
+export const isUserAdmin = async(roomId, userId) => {
+  return await client.travelPlan.findUnique({
+    where: {
+      id: roomId,
+      userId: userId
+    }
+  });
+};
