@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaPlaneDeparture } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           Trekker
         </Link>
 
-        {!isLoggedIn && (
+        {!isLoggedIn ? (
           <div className="flex items-center gap-4 text-sm">
             <button
               onClick={() => navigate("/signin")}
@@ -29,7 +30,22 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
               Sign Up
             </button>
           </div>
-        )}
+        ) : 
+            <div className="flex items-center gap-4 text-sm">
+            <button
+              onClick={() => navigate("/signin")}
+              className="bg-transparent border border-white px-4 py-1 rounded-full hover:bg-white hover:text-black transition"
+            >
+             LogOut
+            </button>
+            <button
+              onClick={() => navigate("/userProfle")}
+              className="text-3xl px-4 py-1 rounded-full text-white font-semibold hover:scale-105 transition"
+            >
+              <CgProfile />
+            </button>
+          </div>
+          }
       </div>
 
       {/* Bottom Navbar - only when not logged in */}
