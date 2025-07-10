@@ -1,9 +1,9 @@
 import {  Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import Navbar from "./component/Navbar"; 
+import Navbar from "./component/Navbar";
 import Home from "./component/Home";
 import SidebarMenu from "./component/Profile/SidebarMenu";
-import FindTravelMate from "./component/FindTravelMate"; 
+import FindTravelMate from "./component/Travel-mate/FindTravelMate";
 import TravelProfilePage from "./component/Profile/TravelProfilePage";
 import TravelFriendsPage from "./component/FriendsPage/TravelFriendsPage";
 import SignIn from "./component/SignIn";
@@ -11,6 +11,7 @@ import SignUp from "./component/SignUp";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
 
   return (
     <>
@@ -35,4 +36,3 @@ function App() {
 }
 
 export default App;
- 
