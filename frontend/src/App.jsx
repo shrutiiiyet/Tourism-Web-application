@@ -15,23 +15,42 @@ function App() {
 
   return (
     <>
-      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      {/* Top Navbar */}
+      <Navbar
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+        sidebarVisible={sidebarVisible}
+        setSidebarVisible={setSidebarVisible}
+      />
 
-     <Routes>
-      
+      {/* Main Content */}
+      <div className={`${sidebarVisible ? "ml-56" : ""} min-h-screen bg-gray-100 transition-all duration-300`}>
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/signup" element={<SignUp setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/find-travel-mate" element={<FindTravelMate />} />
-          <Route path="/profile" element={<TravelProfilePage />} />
-          <Route path="/friends" element={<TravelFriendsPage />} />
-          <Route path="/userProfle" element={<SidebarMenu/>} />
 
-    </Routes>
+          {isLoggedIn && (
+            <>
+              <Route
+                path="/find-travel-mate"
+                element={<FindTravelMate />}
+              />
+              <Route path="/profile" element={<TravelProfilePage />} />
+              <Route path="/friends" element={<TravelFriendsPage />} />
+            </>
+          )}
+        </Routes>
+      </div>
 
+      {/* Sidebar */}
+      {/* {sidebarVisible && (
+        <div className="fixed top-0 left-0 z-50">
+          <SidebarMenu />
+        </div>
+      )} */}
 
     </>
-    
   );
 }
 
