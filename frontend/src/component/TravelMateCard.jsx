@@ -8,34 +8,16 @@ const getInitials = (name) =>
     .join("");
 
 const TravelMateCard = ({ mate }) => {
-  const isCustom = mate.isCustom;
-
   return (
-    <div
-      className={`relative shadow-lg rounded-2xl p-6 transition-transform hover:scale-105 ${
-        isCustom
-          ? "bg-blue-900/20 border border-blue-300 text-white"
-          : "bg-black/20 text-white"
-      }`}
-    >
-      {/* Experience Tag */}
+    <div className="relative bg-black/20 text-white shadow-lg rounded-2xl p-6 transition-transform hover:scale-105">
       <span
         className={`absolute top-3 right-3 px-2 py-1 rounded-full text-xs font-bold text-white ${
-          mate.experience === "first-timer"
-            ? "bg-yellow-500"
-            : mate.experience === "certified"
-            ? "bg-blue-500"
-            : "bg-green-600"
+          mate.experience === "first-timer" ? "bg-yellow-500" : "bg-green-600"
         }`}
       >
-        {mate.experience === "first-timer"
-          ? "First-Time"
-          : mate.experience === "certified"
-          ? "Certified"
-          : "Experienced"}
+        {mate.experience === "first-timer" ? "First-Time" : "Experienced"}
       </span>
 
-      {/* Header */}
       <div className="flex items-center gap-4 mb-4">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-blue-600 text-white font-bold flex items-center justify-center">
           {getInitials(mate.name)}
@@ -48,10 +30,7 @@ const TravelMateCard = ({ mate }) => {
         </div>
       </div>
 
-      {/* Bio */}
       <p className="italic text-sm text-gray-200 mb-4">"{mate.bio}"</p>
-
-      {/* Info */}
       <div className="text-sm text-gray-100 space-y-1 mb-4">
         <p><strong>Destination:</strong> {mate.destination}</p>
         <p><strong>Style:</strong> {mate.travelStyle}</p>
@@ -59,7 +38,6 @@ const TravelMateCard = ({ mate }) => {
         <p><strong>Group:</strong> {mate.groupSize}</p>
       </div>
 
-      {/* Buttons */}
       <div className="flex gap-2 mt-4">
         <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 hover:scale-105 transition">
           <FaEnvelope /> Connect
