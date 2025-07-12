@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; 
 import { FaEnvelope, FaLock, FaGoogle, FaFacebookF } from "react-icons/fa";
+import axios from "axios";
+import { useAuth } from "../context/Authcontext";
 
-const SignIn = ({ setIsLoggedIn }) => { 
+const SignIn = () => { 
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     rememberMe: false,
   });
 
+  const { login } = useAuth();
   const navigate = useNavigate(); 
 
   const handleChange = (e) => {
@@ -19,25 +23,31 @@ const SignIn = ({ setIsLoggedIn }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
       alert("Please fill in both email and password.");
       return;
     }
 
-    alert("Form submitted");
     console.log("Submitted:", formData);
     
-    setIsLoggedIn(true); 
+    const responce = await axios.post("http://localhost:3000/user/signin" , formData);
+
+    if(responce){
+      console.log(responce);
+      
+      login(responce.data)  
+      alert("Logging successfull !!!")
+
+    }else{
+      alert("Somthing went wrong");
+    }
+    
     navigate("/");       
   };
 
-  const handleClick = () => {
-    console.log(" Sign In button clicked");
-    alert(" Sign In button clicked!");
-  };
-
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0f2027] via-[#2c5364] to-[#00bf8f] px-4">
       <div className="bg-white/10 backdrop-blur-lg text-white shadow-2xl rounded-2xl w-full max-w-lg p-8 md:p-10 border border-white/20">
@@ -65,7 +75,7 @@ const SignIn = ({ setIsLoggedIn }) => {
             <input
               type="password"
               name="password"
-              placeholder="••••••••"
+             
               value={formData.password}
               onChange={handleChange}
               className="w-full pl-10 pr-4 py-3 rounded-md bg-white/20 text-white placeholder-gray-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-lime-300 transition"
@@ -91,7 +101,6 @@ const SignIn = ({ setIsLoggedIn }) => {
 
           <button
             type="submit"
-            onClick={handleClick}
             className="w-full bg-lime-400 hover:bg-lime-500 text-gray-900 font-bold py-3 rounded-md transition-all duration-300 shadow-md"
           >
             Sign In

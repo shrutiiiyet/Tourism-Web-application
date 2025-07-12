@@ -1,5 +1,6 @@
 import React from 'react';
 import TravelPackageCards from './TravelPackageCards';
+import Navbar from './Navbar';
 
 
 const Home = () => {
