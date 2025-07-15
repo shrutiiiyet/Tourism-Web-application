@@ -15,30 +15,6 @@ import CurrentPlan from "./component/Dashboard/CurrentPlan";
 import DashboardLayout from "./component/Dashboard/DashboardLayout";
 
 function App() {
-<<<<<<< HEAD
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  return (
-    <Router>
-      {isLoggedIn && <SidebarMenu />}
-      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-      
-      <div className={`${isLoggedIn ? "ml-56" : ""} min-h-screen bg-gray-100`}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<SignIn setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/signup" element={<SignUp setIsLoggedIn={setIsLoggedIn} />} />
-          {isLoggedIn && (
-            <>
-              <Route path="/find-travel-mate" element={<FindTravelMate />} />
-              <Route path="/profile" element={<TravelProfilePage />} />
-              <Route path="/friends" element={<TravelFriendsPage />} />
-            </>
-          )}
-        </Routes>
-      </div>
-    </Router>
-=======
 
   return (
     <>
@@ -64,7 +40,6 @@ function App() {
 
     </>
     
->>>>>>> 1c4786fa459ee338003085d213a447d6f89bcdf3
   );
 }
 
