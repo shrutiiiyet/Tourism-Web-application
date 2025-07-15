@@ -52,7 +52,7 @@ const Navbar = () => {
       </div>
 
         <div className="flex justify-center gap-10 px-6 py-2 bg-[#004d40]/90 text-white text-sm font-semibold shadow-md">
-          <Link to="/" className="hover:text-green-300 transition">Explore</Link>
+          <Link to="/" className="hover:text-green-300 transition">Experience</Link>
           <Link to="/destinations" className="hover:text-green-300 transition">Destinations</Link>
           <Link to="/offers" className="hover:text-green-300 transition">Offers</Link>
           <Link to="/find-travel-mate" className="hover:text-green-300 transition">Find Travel Mate</Link>
