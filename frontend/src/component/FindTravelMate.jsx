@@ -4,6 +4,8 @@ import TravelMateCard from "./TravelMateCard";
 import { useAuth } from "../context/Authcontext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 
 const travelMates = [
   {
@@ -132,7 +134,7 @@ console.log("Token being sent:", token);
             authorization : token
           }
         });
-        alert("User data fetched successfully!");
+        toast.success("User data fetched successfully!");
         console.log("Backend response:", response.data.res);
         setUsers(response.data.res);
       } catch (err) {

@@ -13,13 +13,16 @@ import Settings from "./component/Dashboard/Settings";
 import Friends from "./component/Dashboard/Friends";
 import CurrentPlan from "./component/Dashboard/CurrentPlan";
 import DashboardLayout from "./component/Dashboard/DashboardLayout";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function App() {
 
   return (
     <>
       <Navbar />
-
+      <ToastContainer position="top-center" />
      <Routes>
       
           <Route path="/" element={<Home />} />
